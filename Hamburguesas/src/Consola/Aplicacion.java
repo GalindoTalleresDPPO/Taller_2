@@ -87,7 +87,7 @@ public class Aplicacion {
 		System.out.println("2. Iniciar un pedido");
 		System.out.println("3. Agregar Elementos al pedido en curso");
 		System.out.println("4. Info Pedido con el ID");
-		System.out.println("6. Salir de la aplicación\n");
+		System.out.println("5. Salir de la aplicación\n");
 	}
 	
 	
