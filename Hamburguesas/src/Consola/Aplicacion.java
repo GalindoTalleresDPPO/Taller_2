@@ -4,18 +4,23 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
+import Procesamiento.Pedido;
+import Procesamiento.Producto;
+import Procesamiento.ProductoMenu;
 import Procesamiento.Restaurante;
 
 public class Aplicacion {
 	Restaurante restaurante = new Restaurante();
-	
+	public static Pedido pedidoEnCurso = null;
 	
 	
 	public void ejecutarAplicacion()
 	{
+
 		
-		System.out.println("Estadísticas sobre los Juegos Olímpicos\n");
+		System.out.println("Selecciona una opcion: ");
 
 		boolean continuar = true;
 		while (continuar)
@@ -23,18 +28,39 @@ public class Aplicacion {
 			try
 			{
 				mostrarMenu();
-				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
+				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción:\n"));
 				if (opcion_seleccionada == 1) {
 					menu();
-					
 				}
 				
 				else if (opcion_seleccionada == 2) {
+			
+					String direccion = input("Ingresa tu direccion: ");
+					String nombreCliente = input("Ingrese Su Nombre: ");
+					
+					
+					Pedido pedido=new Pedido(direccion, nombreCliente);
+					pedidoEnCurso=pedido;
+					restaurante.nuevoElementoPedido(pedido);
+					
+					System.out.println("\n******IMPORTANTE******\n\nEl ID de su pedido es: "+pedido.getID());
+					
+				}
+				
+				else if (opcion_seleccionada == 3) {
+					restaurante.agregarProductoPedido(pedidoEnCurso);
+					
+				}
+				
+				else if (opcion_seleccionada == 4) {
+					int idPedido = Integer.parseInt(input("Digite el ID del pedido:\n"));
+					pedidoEnCurso.infoPedido(idPedido);
+					
 					
 				}
 					
 				
-				else if (opcion_seleccionada == 14)
+				else if (opcion_seleccionada == 5)
 				{
 					System.out.println("Saliendo de la aplicación ...");
 					continuar = false;
@@ -57,20 +83,11 @@ public class Aplicacion {
 	public void mostrarMenu()
 	{
 		System.out.println("\nOpciones de la aplicación\n");
-		System.out.println("1. Mostrar Menu");
-		System.out.println("2. Consultar los atletas de un año dado");
-		System.out.println("3. Consultar las medallas de un atleta en un periodo");
-		System.out.println("4. Consultar los atletas de un país dado");
-		System.out.println("5. Consultar el país con más medallistas");
-		System.out.println("6. Consultar todos los medallistas de un evento dado");
-		System.out.println("7. Consultar los atletas con un mínimo de medallas");
-		System.out.println("8. Consultar el atleta estrella de todos los tiempos");
-		System.out.println("9. Consultar mejor país en un evento");
-		System.out.println("10. Consultar el atleta todoterreno");
-		System.out.println("11. Consultar los medallistas por país y género");
-		System.out.println("12. Consultar el porcentaje de atletas que son medallistas");
-		System.out.println("13. Consultar pais por atleta");
-		System.out.println("14. Salir de la aplicación\n");
+		System.out.println("1. Mostrar el  Menu");
+		System.out.println("2. Iniciar un pedido");
+		System.out.println("3. Agregar Elementos al pedido en curso");
+		System.out.println("4. Info Pedido con el ID");
+		System.out.println("6. Salir de la aplicación\n");
 	}
 	
 	
@@ -78,19 +95,28 @@ public class Aplicacion {
 		File ingredientes = new File("./data/ingredientes.txt");
 		File combos = new File("./data/combos.txt");
 		File menu = new File("./data/menu.txt");
-		//Ingredientes[] ingredientes = restaurante.getIngredientes();
-		
 		restaurante.cargarInformacion(ingredientes, menu, combos);
 		
-	}
-	
+		ArrayList<ProductoMenu> listaMenu =restaurante.getMenuBase();
+		for(int i=0; i<listaMenu.size(); i++ )
+		{
+			ProductoMenu producto = listaMenu.get(i);
+			String nombreProducto = producto.getNombre();
+			int precio = producto.getPrecio();
+			
+			System.out.println(i+". "+nombreProducto+"\t"+"precio: "+ precio);
+		}
+		
+		//Ingredientes[] ingredientes = restaurante.getIngredientes();
 
+		
+	}
 	
 	public String input(String mensaje)
 	{
 		try
 		{
-			System.out.print(mensaje + ": ");
+			System.out.print(mensaje);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			return reader.readLine();
 		}

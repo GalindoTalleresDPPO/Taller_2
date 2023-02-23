@@ -2,7 +2,7 @@ package Procesamiento;
 
 import java.util.ArrayList;
 
-public class Combo
+public class Combo implements Producto
 {
 	
 	double descuento;
@@ -20,7 +20,7 @@ public class Combo
 	public int getPrecio(){
 		int precioTotal=0;
 		
-		for (int i=0; i<=listaCombo.size(); i++) {
+		for (int i=0; i<listaCombo.size(); i++) {
 			ProductoMenu producto = listaCombo.get(i);
 			int precioProducto=producto.getPrecio();
 			precioTotal=precioTotal + precioProducto; 

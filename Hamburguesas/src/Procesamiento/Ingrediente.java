@@ -14,7 +14,6 @@ public class Ingrediente
 		
 		
 	}
-
 	
 	public String getNombre() 
 	{
@@ -22,10 +21,11 @@ public class Ingrediente
 		
 	}
 	
-	public int costoAdicional()
+	public int getCostoAdicional()
 	{
 		return costoAdicional;
 		
 	}
+	
 }
 

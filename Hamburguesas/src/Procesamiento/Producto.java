@@ -6,5 +6,4 @@ public interface Producto {
 	public String getNombre();
 
 	
-
 }
